@@ -1,0 +1,37 @@
+trigger:
+- main  # Run pipeline when pushing to 'main'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+steps:
+# 1. Checkout code
+- task: Checkout@1
+
+# 2. Setup Python
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(pythonVersion)'
+    addToPath: true
+
+# 3. Install dependencies
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+# 4. (Optional) Run tests
+- script: |
+    echo "No tests added yet"
+  displayName: 'Run tests'
+
+# 5. Deploy to Azure Web App
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'YOUR_AZURE_SERVICE_CONNECTION'   # Configure in DevOps > Project Settings > Service connections
+    appName: 'YOUR_APP_SERVICE_NAME'                     # Your Azure App Service name
+    package: '.'
+
