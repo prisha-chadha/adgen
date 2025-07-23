@@ -1,0 +1,10 @@
+name: adgen-pipeline
+location: eastus
+properties:
+  appSettings:
+    - name: AZURE_OPENAI_API_KEY
+      value: ""
+    - name: AZURE_OPENAI_ENDPOINT
+      value: ""
+  runtimeStack: "PYTHON|3.11"
+  sku: B1
